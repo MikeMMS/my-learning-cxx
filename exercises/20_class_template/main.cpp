@@ -14,7 +14,7 @@ template <class T> struct Tensor4D
         std::copy(shape_, shape_ + 4, shape);
         size = std::accumulate(shape_, shape_ + 4, 1, std::multiplies<unsigned int>());
         data = new T[size];
-        std::memcpy(data, data_, size * sizeof(T));
+        std::copy(data_, data_ + size, data);
     }
     ~Tensor4D()
     {

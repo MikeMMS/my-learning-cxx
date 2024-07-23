@@ -20,7 +20,7 @@ struct Fibonacci
     }
     Fibonacci()
     {
-        std::memset(cache, 0, 128 * sizeof(unsigned long long));
+        std::fill(cache, cache + 128, 0);
     }
 };
 
