@@ -4,39 +4,70 @@
 // READ: 移动赋值 <https://zh.cppreference.com/w/cpp/language/move_assignment>
 // READ: 运算符重载 <https://zh.cppreference.com/w/cpp/language/operators>
 
-class DynFibonacci {
+class DynFibonacci
+{
     size_t *cache;
     int cached;
 
-public:
+  public:
     // TODO: 实现动态设置容量的构造器
-    DynFibonacci(int capacity): cache(new ?), cached(?) {}
+    DynFibonacci(int capacity) : cache(new size_t[capacity]), cached(2)
+    {
+        ASSERT(capacity >= 2, "error capacity size");
+        cache[0] = 0;
+        cache[1] = 1;
+        for (; cached < capacity; ++cached)
+        {
+            cache[cached] = cache[cached - 1] + cache[cached - 2];
+        }
+    }
 
     // TODO: 实现移动构造器
-    DynFibonacci(DynFibonacci &&other) noexcept = delete;
+    DynFibonacci(DynFibonacci &&other) noexcept : cache(other.cache), cached(other.cached)
+    {
+        other.cache = nullptr;
+    }
 
     // TODO: 实现移动赋值
     // NOTICE: ⚠ 注意移动到自身问题 ⚠
-    DynFibonacci &operator=(DynFibonacci &&other) noexcept = delete;
+    DynFibonacci &operator=(DynFibonacci &&other) noexcept
+    {
+        if (this != &other)
+        {
+            std::swap(cache, other.cache);
+            std::swap(cached, other.cached);
+            other.cache = nullptr;
+        }
+
+        return *this;
+    }
 
     // TODO: 实现析构器，释放缓存空间
-    ~DynFibonacci();
+    ~DynFibonacci()
+    {
+        delete[] cache;
+    }
 
     // TODO: 实现正确的缓存优化斐波那契计算
-    size_t operator[](int i) {
-        for (; false; ++cached) {
-            cache[cached] = cache[cached - 1] + cache[cached - 2];
-        }
+    size_t operator[](int i)
+    {
         return cache[i];
     }
 
     // NOTICE: 不要修改这个方法
-    bool is_alive() const {
+    bool is_alive() const
+    {
         return cache;
+    }
+
+    size_t operator[](size_t i) const
+    {
+        return cache[i];
     }
 };
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     DynFibonacci fib(12);
     ASSERT(fib[10] == 55, "fibonacci(10) should be 55");
 

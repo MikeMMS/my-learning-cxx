@@ -3,6 +3,9 @@ set_encodings("utf-8")
 set_warnings("all")
 set_kind("binary")
 set_languages("cxx17")
+set_toolchains("gcc", "clang")
+add_cxflags("-fsanitize=signed-integer-overflow", {force = true})
+add_ldflags("-fsanitize=signed-integer-overflow", {force = true})
 
 -- 格式化输出
 target("exercise00")

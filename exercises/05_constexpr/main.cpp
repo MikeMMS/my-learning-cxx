@@ -1,28 +1,28 @@
 #include "../exercise.h"
 
-template <int n> struct fib
+template <uintmax_t n> struct fib
 {
-    enum : unsigned long long
+    enum : uintmax_t
     {
         result = fib<n - 1>::result + fib<n - 2>::result
     };
 };
 template <> struct fib<0>
 {
-    enum
+    enum : uintmax_t
     {
         result = 0
     };
 };
 template <> struct fib<1>
 {
-    enum
+    enum : uintmax_t
     {
         result = 1
     };
 };
 
-// constexpr unsigned long long fibonacci(int i) {
+// constexpr uintmax_t fibonacci(int i) {
 
 //     return fib<i>::result;
 // }
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     std::cout << "fibonacci(20) = " << FIB20 << std::endl;
 
     // TODO: 观察错误信息，修改一处，使代码编译运行
-    constexpr auto ANS_N = 100;
+    constexpr auto ANS_N = 94;
     constexpr auto ANS = fib<ANS_N>::result;
     std::cout << "fibonacci(" << ANS_N << ") = " << ANS << std::endl;
 
